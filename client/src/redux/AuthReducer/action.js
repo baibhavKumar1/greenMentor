@@ -28,6 +28,7 @@ export const Signin = (userData, navigate) => async (dispatch) => {
         .then((res) => {
             dispatch({ type: LOGIN_SUCCESS, payload: res })
             localStorage.setItem('token', (res.data.token))
+            console.log(res);
             navigate('/tasks')
         })
     } catch (err) {
@@ -79,9 +80,9 @@ export const GetUser = (token) => async (dispatch) => {
             console.log(err)
         })
 }
-export const EditProfile = (token) => async (dispatch) => {
+export const EditProfile = (token,name) => async (dispatch) => {
     dispatch({ type: RELOGIN_REQUEST })
-    await axios.patch(`${userURL}/user/editprofile`,
+    await axios.patch(`${userURL}/user/edit`, {name},
         {
             headers: {
                 Authorization: `Bearer ${token}`

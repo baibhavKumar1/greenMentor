@@ -30,7 +30,7 @@ export const reducer = (state=init,{type,payload})=>{
     case LOGOUT_ERROR: return{...state,isLoading:false,isError:true,isAuth:false,token:""}
 
     case GET_USER_REQUEST:return{...state,isLoading:true}
-    case GET_USER_SUCCESS:return {...state,isLoading:false,profile:payload.data}
+    case GET_USER_SUCCESS:return {...state,isLoading:false,profile:payload.data.user}
     case GET_USER_ERROR: return{...state,isLoading:false,isError:true}
    
     case EDIT_USER_REQUEST:return{...state,isLoading:true}

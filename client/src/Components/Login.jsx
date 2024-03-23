@@ -47,6 +47,7 @@ const Login = () => {
         <button onClick={handleSignup} className='bg-blue-100' type="submit">
           SIGN IN
         </button>
+        <a href='/register' className='border-none'>Not a User? <u>Register</u></a>
       </form>
     </div>
   );

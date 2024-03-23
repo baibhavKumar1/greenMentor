@@ -59,7 +59,7 @@ UserRouter.post("/login",async(req,res)=>{
     }
 });
 
-UserRouter.get("/logout",async(req,res)=>{
+UserRouter.get("/logout", async(req,res)=>{
     try{
         const token = req.headers.authorization.split(" ")[1];
         if (!token) {
@@ -74,7 +74,8 @@ UserRouter.get("/logout",async(req,res)=>{
 });
 UserRouter.patch("/edit", auth, async(req,res)=>{
     try{
-        const updated= await UserModel.findByIdAndUpdate(req.body.userID,{...req.body},{new:true});
+        console.log(req.body);
+        const updated= await UserModel.findByIdAndUpdate(req.body.userID,{name:req.body.name},{new:true});
         await updated.save()
         return res.status(200).json({updated});
     }catch(err){

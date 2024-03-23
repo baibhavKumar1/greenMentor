@@ -68,6 +68,7 @@ export const Register = () => {
         <button onClick={handleSignup} className='bg-blue-100' type="submit">
           SIGN UP
         </button>
+        <a className='border-none' href='/'>Already Registered? <u>Login</u></a>
       </form>
     </div>
   );
