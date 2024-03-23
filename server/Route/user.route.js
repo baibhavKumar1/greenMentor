@@ -7,28 +7,29 @@ const jwt= require('jsonwebtoken');
 const auth = require('../Middleware/auth.middleware');
 const upload = require('../Middleware/upload.middleware');
 
-UserRouter.get("/",async(req,res)=>{
-    res.send("It's on")
+UserRouter.get("/",auth,async(req,res)=>{
+    //console.log(req.body.userID);
+    const user = await UserModel.findById(req.body.userID).select('-password')
+    res.status(200).json({user})
 })
 
 UserRouter.post('/register',upload.single('avatar'), async(req,res)=>{
-    const {name,age,email,pass,city}= req.body;
-    (req.file)
+    const {name,email,password}= req.body;
     const avatar = req.file ? req.file.path : null;
     try{
         const exist= await UserModel.findOne({email});
         if(exist){
             return res.status(400).send("User already exist");
         }
-        bcrypt.hash(pass,3,async(err,hash)=>{
+        bcrypt.hash(password,3,async(err,hash)=>{
             if(err){
                 return res.status(400).send(err.message);
             }
-            const user= new UserModel({
-                name,email,city,avatar,pass:hash,age
+            const user= new UserModel({ 
+                name,email,avatar,password:hash
             });
             await user.save();
-            const token = jwt.sign({userID:user._id,userEmail:email,userPass:pass,userAvatar:avatar},"token");
+            const token = jwt.sign({userID:user._id,userEmail:email,userPass:password,userAvatar:avatar},"token");
             res.status(200).json({message:"User Registered",token,name:user.name,avatar:user.avatar});
         })
     }catch(err){
@@ -37,14 +38,14 @@ UserRouter.post('/register',upload.single('avatar'), async(req,res)=>{
 })
 
 UserRouter.post("/login",async(req,res)=>{
-    const {email,pass} =req.body;
-    (email,pass)
+    console.log(req.body);
+    const {email,password} =req.body;
     try{
         const user =await UserModel.findOne({email});
         if (user){
-            bcrypt.compare(pass,user.pass,(err, decoded) => {
+            bcrypt.compare(password,user.password,(err, decoded) => {
                 if(decoded){
-                    const token = jwt.sign({userID:user._id,userEmail:email,userPass:pass,userAvatar:user.avatar},"token");
+                    const token = jwt.sign({userID:user._id,userEmail:email,userPass:password,userAvatar:user.avatar},"token");
                     res.status(200).json({message:"User Logged In",token,name:user.name,avatar:user.avatar});
                 }else{
                     res.status(400).send("Wrong credentials");
@@ -96,7 +97,7 @@ UserRouter.get("/relogin",async(req,res)=>{
         const user = await UserModel.findOne({ email:userEmail });
     
         if (user) {
-            bcrypt.compare(userPass, user.pass, (err, isValid) => {
+            bcrypt.compare(userPass, user.password, (err, isValid) => {
                 if (isValid) {
                     return res.status(200).json({ message: "User Logged In", token, name: user.name, avatar:user.avatar });
                 } else {

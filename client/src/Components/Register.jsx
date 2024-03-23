@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Signup } from '../redux/AuthReducer/action';
+import { useNavigate } from 'react-router-dom'
 
 export const Register = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    pass: '',
+    password: '',
   });
   const [avatar, setAvatar] = useState(null)
 
@@ -26,15 +27,15 @@ export const Register = () => {
     const formValue = new FormData();
     formValue.append('name', formData.name)
     formValue.append('email', formData.email)
-    formValue.append('pass', formData.pass)
+    formValue.append('password', formData.password)
     formValue.append('avatar', avatar)
-    dispatch(Signup(formValue))
+    dispatch(Signup(formValue,navigate))
   };
   return (
     <div className='h-screen flex flex-col gap-4 justify-center items-center border'>
-    <p className='text-4xl'>Task List</p>
+      <p className='text-4xl'>Task List</p>
       <form onSubmit={handleSignup} className='border border-black rounded flex space-y-4 flex-col *:outline-none *:p-1 p-16 *:border *:border-black *:rounded'>
-      <p className='border-none text-center text-xl'>Sign Up</p>
+        <p className='border-none text-center text-xl'>Sign Up</p>
         <input
           name="name"
           placeholder="Name"
@@ -51,17 +52,17 @@ export const Register = () => {
           fontSize={"16px"}
         />
         <input
-          name="pass"
+          name="password"
           type="password"
           placeholder="Password"
-          value={formData.pass}
+          value={formData.password}
           onChange={handleChange}
           fontSize={"16px"}
         />
         <input
           name="avatar"
           type="file"
-          onChange={handleChange} 
+          onChange={handleChange}
           fontSize={"16px"}
         />
         <button onClick={handleSignup} className='bg-blue-100' type="submit">

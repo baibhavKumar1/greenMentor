@@ -4,8 +4,9 @@ const taskSchema= new Schema(
     {
         title:String,
         description:String,
-        deadline:String,
+        deadline:{type:Date},
         creator:{ type: Schema.Types.ObjectId, ref: 'User' },
+        isCompleted:{type:Boolean,default:false}
     },{
         versionKey:false
     }

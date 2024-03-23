@@ -1,6 +1,7 @@
 const express  = require('express');
 const auth = require('../Middleware/auth.middleware');
 const TaskModel = require('../Model/task.model');
+const UserModel = require('../Model/user.model');
 const TaskRouter= express.Router();
 
 TaskRouter.use(auth);
@@ -15,7 +16,8 @@ TaskRouter.get('/:id',async(req,res)=>{
     res.status(200).json(task)
 })
 TaskRouter.post('/',async(req,res)=>{
-    const task = await TaskModel.create({...req.body})
+    const task = await TaskModel.create({...req.body,creator:req.body.userID})
+    await UserModel.findByIdAndUpdate(req.body.userID,{$push:{tasks:task._id}},{new:true})
     res.status(200).json(task)
 })
 
@@ -25,8 +27,8 @@ TaskRouter.patch('/:id',async(req,res)=>{
     res.status(200).json({task})
 })
 TaskRouter.delete('/:id',async(req,res)=>{
-    const {id} = req.params;
-    const task = await TaskModel.findByIdAndDelete(id)
+    await TaskModel.findByIdAndDelete(req.params.id)
+    await UserModel.findByIdAndUpdate(req.body.userID,{$pull:{tasks:req.params.id}},{new:true})
     res.status(200).json({message:"Task Deleted"})
 })
 

@@ -6,6 +6,7 @@ const TaskRouter = require('./Route/task.route');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/user", UserRouter);
 app.use("/task", TaskRouter);
 app.use('/images',express.static('images'))
