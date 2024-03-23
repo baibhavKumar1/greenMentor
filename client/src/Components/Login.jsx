@@ -16,7 +16,7 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSignup = (e) => {
+  const handleSignin = (e) => {
     e.preventDefault()
     const formValue = new FormData();
     formValue.append('email', formData.email)
@@ -26,7 +26,7 @@ const Login = () => {
   return (
     <div className='h-screen flex flex-col gap-4 justify-center items-center border'>
       <p className='text-4xl'>Task List</p>
-      <form onSubmit={handleSignup} className='border border-black rounded flex space-y-4 flex-col *:outline-none *:p-1 p-16 *:border *:border-black *:rounded'>
+      <form onSubmit={handleSignin} className='border border-black rounded flex space-y-4 flex-col *:outline-none *:p-1 p-16 *:border *:border-black *:rounded'>
         <p className='border-none text-center text-xl'>Sign IN</p>
         <input
           name="email"
@@ -44,7 +44,7 @@ const Login = () => {
           onChange={handleChange}
           fontSize={"16px"}
         />
-        <button onClick={handleSignup} className='bg-blue-100' type="submit">
+        <button onClick={handleSignin} className='bg-blue-100' type="submit">
           SIGN IN
         </button>
         <a href='/' className='border-none'>Not a User? <u>Register</u></a>

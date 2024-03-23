@@ -63,6 +63,7 @@ export const Relogin = (token) => async (dispatch) => {
             }
         }).then((res) => {
             dispatch({ type: RELOGIN_SUCCESS, payload: res })
+            // console.log(res);
         }).catch((err) => {
             dispatch({ type: RELOGIN_ERROR })
             console.log(err)

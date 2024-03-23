@@ -119,7 +119,7 @@ const Tasks = () => {
                   <td className='border border-slate-500'><button onClick={() => handleDelete(item._id)}>Delete</button></td>
                 </tr>
               )
-            }) : <p>Loading</p>}
+            }) : <p>No Task Found</p>}
 
           </tbody>
         </table>

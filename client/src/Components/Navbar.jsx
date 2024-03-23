@@ -1,11 +1,17 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-import { Logout } from "../redux/AuthReducer/action";
+import { Logout, Relogin } from "../redux/AuthReducer/action";
+import { useEffect } from "react";
 
 const Navbar = () => {
-  const {isAuth,name,token} = useSelector((store)=>store.AuthReducer)
+  const {isAuth,name} = useSelector((store)=>store.AuthReducer)
+  const token = useSelector((store)=>store.AuthReducer.token) || localStorage.getItem("token");
+  //console.log(token);
   const dispatch = useDispatch();
   const navigate= useNavigate()
+  useEffect(()=>{
+    dispatch(Relogin(token))
+  },[token])
   const handleLogout=()=>{
      localStorage.removeItem('token')
      dispatch(Logout(token))
@@ -17,8 +23,7 @@ const Navbar = () => {
         <Link to='/profile'>PROFILE</Link>
         {isAuth==true ? <button onClick={handleLogout}>Logout {name}</button>: 
         <div className="flex gap-2">
-        <a href="/">Register</a>
-        <a href="/login">Login</a>
+        <a href="/">Join</a>
         </div>}
     </div>
   )
