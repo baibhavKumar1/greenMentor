@@ -18,7 +18,6 @@ const Profile = () => {
     setData("")
   }
 
-  console.log(user);
   
   return (
     <div className='h-screen flex flex-col mt-4  items-center'>

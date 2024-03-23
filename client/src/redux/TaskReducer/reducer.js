@@ -3,7 +3,7 @@ import { CREATE_TASK_ERROR,CREATE_TASK_REQUEST,CREATE_TASK_SUCCESS,GET_TASK_ERRO
 const init = {
     isLoading: false,
     isError:false,
-    data:{},
+    data:[],
 }
 
 export const reducer = (state=init,{type,payload})=>{

@@ -8,7 +8,6 @@ const auth = require('../Middleware/auth.middleware');
 const upload = require('../Middleware/upload.middleware');
 
 UserRouter.get("/",auth,async(req,res)=>{
-    //console.log(req.body.userID);
     const user = await UserModel.findById(req.body.userID).select('-password')
     res.status(200).json({user})
 })
@@ -38,7 +37,6 @@ UserRouter.post('/register',upload.single('avatar'), async(req,res)=>{
 })
 
 UserRouter.post("/login",async(req,res)=>{
-    console.log(req.body);
     const {email,password} =req.body;
     try{
         const user =await UserModel.findOne({email});
@@ -74,7 +72,7 @@ UserRouter.get("/logout", async(req,res)=>{
 });
 UserRouter.patch("/edit", auth, async(req,res)=>{
     try{
-        console.log(req.body);
+    
         const updated= await UserModel.findByIdAndUpdate(req.body.userID,{name:req.body.name},{new:true});
         await updated.save()
         return res.status(200).json({updated});
