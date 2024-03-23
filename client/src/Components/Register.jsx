@@ -7,13 +7,25 @@ const Register = () => {
   const dispatch = useDispatch();
   const [showlogin,setShowLogin] =useState(false)
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({
+  const [registerData, setRegisterData] = useState({
     name: '',
+    email: '',
+    password: '',
+  });
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [avatar, setAvatar] = useState(null)
 
+  const handleRegisterChange = (e) => {
+    const { type, name, value } = e.target;
+    if (type === "file") {
+      setAvatar(e.target.files[0]);
+    } else {
+      setRegisterData({ ...registerData, [name]: value });
+    }
+  };
   const handleChange = (e) => {
     const { type, name, value } = e.target;
     if (type === "file") {
@@ -28,15 +40,20 @@ const Register = () => {
     formValue.append('email', formData.email)
     formValue.append('password', formData.password)
     dispatch(Signin(formData,navigate))
+    setFormData({email: '',
+    password: ''})
   };
   const handleSignup = (e) => {
     e.preventDefault()
     const formValue = new FormData();
-    formValue.append('name', formData.name)
-    formValue.append('email', formData.email)
-    formValue.append('password', formData.password)
+    formValue.append('name', registerData.name)
+    formValue.append('email', registerData.email)
+    formValue.append('password', registerData.password)
     formValue.append('avatar', avatar)
     dispatch(Signup(formValue,navigate))
+    setRegisterData({name: '',
+    email: '',
+    password: ''})
   };
   return (
     <div className='h-screen flex flex-col gap-4 justify-center items-center border'>
@@ -47,30 +64,30 @@ const Register = () => {
         <input
           name="name"
           placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
+          value={registerData.name}
+          onChange={handleRegisterChange}
           fontSize={"16px"}
         />
         <input
           name="email"
           type="email"
           placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
+          value={registerData.email}
+          onChange={handleRegisterChange}
           fontSize={"16px"}
         />
         <input
           name="password"
           type="password"
           placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
+          value={registerData.password}
+          onChange={handleRegisterChange}
           fontSize={"16px"}
         />
         <input
           name="avatar"
           type="file"
-          onChange={handleChange}
+          onChange={handleRegisterChange}
           fontSize={"16px"}
         />
         <button onClick={handleSignup} className='bg-blue-100' type="submit">

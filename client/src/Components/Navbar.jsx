@@ -10,7 +10,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate= useNavigate()
   useEffect(()=>{
-    dispatch(Relogin(token))
+    if(token) dispatch(Relogin(token))
   },[token])
   const handleLogout=()=>{
      localStorage.removeItem('token')
