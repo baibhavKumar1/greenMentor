@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Signup } from '../redux/AuthReducer/action';
 import { useNavigate } from 'react-router-dom'
 
-export const Register = () => {
+const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
@@ -68,8 +68,10 @@ export const Register = () => {
         <button onClick={handleSignup} className='bg-blue-100' type="submit">
           SIGN UP
         </button>
-        <a className='border-none' href='/'>Already Registered? <u>Login</u></a>
+        <a className='border-none' href='/login'>Already Registered? <u>Login</u></a>
       </form>
     </div>
   );
 };
+
+export default Register
