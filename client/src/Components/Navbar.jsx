@@ -15,7 +15,11 @@ const Navbar = () => {
     <div className="flex justify-between p-2 *:text-xl">
         <Link to='/tasks'>TASK LIST</Link>
         <Link to='/profile'>PROFILE</Link>
-        {isAuth==true ? <button onClick={handleLogout}>Logout {name}</button>: <a href="/">Login</a>}
+        {isAuth==true ? <button onClick={handleLogout}>Logout {name}</button>: 
+        <div className="flex gap-2">
+        <a href="/">Register</a>
+        <a href="/login">Login</a>
+        </div>}
     </div>
   )
 }
