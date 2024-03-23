@@ -23,7 +23,7 @@ const Profile = () => {
     <div className='h-screen flex flex-col mt-4  items-center'>
       {user?.name && (
         <div className='h-max border rounded p-10 flex-col flex w-[300px]'>
-        <img src={`http://localhost:3000/${user.avatar}`} alt='img'/>
+        <img src={`${import.meta.env.VITE_BACKEND_URL}/${user.avatar}`} alt='img'/>
           <p>Name: {user.name.toUpperCase()}</p>
           <p>Email: {user.email}</p>
           
